@@ -1,0 +1,60 @@
+/* swal-custom.css */
+.swal2-popup {
+    font-family: 'DM Sans', sans-serif;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.swal2-title {
+    font-size: 1.6em;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.swal2-content {
+    font-size: 1.2em;
+    color: #666;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+.swal2-styled.swal2-confirm,
+.swal2-styled.swal2-cancel {
+    background-color: transparent !important;
+    color: #333 !important;
+    border: 2px solid #333 !important;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1em;
+    padding: 10px 25px;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.swal2-styled.swal2-confirm:hover {
+    background-color: #3085d6 !important;
+    color: white !important;
+    border-color: #3085d6 !important;
+}
+
+.swal2-styled.swal2-cancel {
+    margin-right: 10px;
+}
+
+.swal2-styled.swal2-cancel:hover {
+    background-color: #d33 !important;
+    color: white !important;
+    border-color: #d33 !important;
+}
+
+.swal2-styled:focus {
+    box-shadow: none !important;
+}
+
+.swal-product-image {
+    width: 150px;
+    margin-top: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

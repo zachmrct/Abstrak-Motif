@@ -1,0 +1,896 @@
+@import "base.css";
+@import "navbar.css";
+@import "gridheader.css";
+@import "swal.css";
+@import "vieworder.css";
+@import "products.css";
+@import "loader.css";
+/* body {
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+} */
+
+.main {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.catalogue {
+    padding: 2% 0%;
+    width: 90%;
+    margin: auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ffffff;
+    /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); */
+    border-radius: 8px;
+}
+
+.orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 14px; 
+    text-align: left;
+    background-color: #ffffff;
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.orders-table th, .orders-table td {
+    padding: 8px 12px;
+    border: 1px solid #dddddd;
+}
+
+
+.orders-table tbody tr {
+
+    border-bottom: 1px solid #dddddd;
+}
+
+.orders-table tbody tr:nth-of-type(even) {
+    background-color: #f9f9f9;
+}
+
+
+.orders-table tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+}
+
+.orders-table tbody ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#next-button {
+    background-color: #000000;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 20px 0;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+#next-button:hover {
+    background-color: #333333;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.pagination button, .pagination span {
+    background-color: #000000;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 0 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.pagination button:hover, .pagination span:hover {
+    background-color: #333333;
+}
+
+.pagination .active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.pagination span {
+    display: inline-block;
+    text-align: center;
+    min-width: 40px;
+}
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    margin-top: 20px;
+}
+
+/* FOR MODAL */
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-right: 40px;
+    padding-left: 40px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 700px;
+    position: relative;
+    display: grid;
+    gap: 25px;
+    grid-template-areas:
+        "header header"
+        "order-num ordered-from"
+        "order-date fulfillmentstatus"
+        "paymentmethod paymentstatus"
+        "shipping-fee voucher"
+        "items items"
+        "payment payment"
+        "submit submit";
+}
+
+.modal-content > * {
+    padding: 10px;
+}
+.exit, .exit-product-list {
+    height: 1rem;
+    width: 1.25rem;
+    
+}
+
+.exit-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    opacity: 70%;
+    cursor: pointer;
+}
+
+.form-title {
+    flex: 0 0 15%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content .form-title {
+    grid-area: header;
+}
+.modal-content .order-date {
+    grid-area: order-date;
+}
+.modal-content .fulfillmentstatus {
+    grid-area: fulfillmentstatus;
+}
+.modal-content .itemslist {
+    background: #f3f3f3;
+    padding: 25px;
+    grid-area: items;
+    margin-top: 10px;
+}
+.modal-content .payment {
+    padding: 25px;
+    background: #f3f3f3;
+    grid-area: payment;
+    margin-top: 10px;
+
+}
+.modal-content .paymentmethod {
+    grid-area: paymentmethod;
+}
+.modal-content .paymentstatus {
+    grid-area: paymentstatus;
+}
+.modal-content .submit {
+    grid-area: submit;
+    text-align: center;
+}
+
+.submitbtn, .add-to-cart, .filter-sort-done{
+    background-color: #d9d9d9;
+    color: black;
+    padding: 15px;
+    border: none;
+    cursor: pointer;
+    font-family: "DM Sans";
+}
+
+.submitbtn:hover, .add-to-cart:hover, .filter-sort-done:hover, .filter-sort-clear:hover {
+    background-color: black;
+    color: white;
+}
+
+.filter-sort-clear{
+    background-color: #d9d9d9;
+    color: black;
+    padding: 15px;
+    border: none;
+    cursor: pointer;
+    font-family: "DM Sans";
+}
+
+.itemdetails {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+}
+
+.itemdetails, .nameandpic {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nameandpic{
+    gap: 15px;
+    max-width: 33%;
+}
+
+
+.payment {
+    display: flex;
+    flex-direction: column;
+}
+.payment div {
+    display: flex;
+    justify-content: space-between;
+}
+select, input[type="date"], input[type="number"], input[type="text"] {
+    font-family: "DM Sans";
+}
+
+input[type="date"], input[type="number"],
+.fulfillmentstatus, .voucher, .paymentmethod, .paymentstatus, .orderedfrom, .paymentstatusfilter,  .orderfromfilter, .fulfillmentfilter, .sorting {
+    border: 1px solid transparent; 
+    outline: none; 
+    background-color: #f3f3f3;
+    border: 1px solid #c2c2c2;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.itempic{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 5px;
+    box-shadow: #000000 1px 1px 3px;
+}
+
+.modal-open {
+    overflow: hidden;
+}
+
+
+.itemslist {
+    position: relative;
+    width: 100%;
+    margin-left: 0%;
+}
+
+.plus-sign {
+    position: absolute;
+    top: 20px; 
+    right: 25px; 
+    font-size: 24px; 
+    color: #000; 
+    cursor: pointer; 
+}
+
+.plus-sign:hover {
+    color: #d9d9d9;
+}
+
+
+/* Additional CSS for the product list modal */
+
+#product-list-modal .modal-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 90%;
+    max-width: 900px;
+    padding: 20px 40px;
+    align-items: center;
+}
+
+#product-list-modal .gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    width: 100%;
+}
+
+.exit-product-list {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+}
+
+/* Product Details Modal */
+#product-details-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.product-details-modal-content {
+    background-color: white;
+    width: 90%;
+    max-width: 700px;
+    margin: 50px auto;
+    border-radius: 8px;
+    padding: 20px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.exit-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.product-details {
+    text-align: center;
+}
+
+.product-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.product-image {
+    flex-shrink: 0;
+    width: 150px;
+}
+
+.product-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.product-description {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.product-description h1 {
+    font-size: 1.2em;
+    margin: 0;
+}
+
+.product-description p {
+    margin: 5px 0;
+    font-size: 1em;
+}
+
+@media (min-width: 768px) {
+    .product-info {
+        gap: 40px;
+    }
+}
+
+.variation-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    background-color: #f3f3f3;
+    padding: 15px;
+    gap: 10px; /* Add some space between the items */
+}
+
+.variation-controls label,
+.variation-controls select,
+.variation-controls .quantity-controls {
+    display: flex;
+    align-items: center;
+}
+
+.variation-controls label {
+    min-width: 70px;
+}
+
+.variations {
+    font-size: 16px;
+    background-color: #f3f3f3;
+    border: none;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Add some space between quantity controls */
+}
+
+.minus, .plus {
+    border: none;
+    background-color: #f3f3f3;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.minus:hover, .plus:hover {
+    color: #d9d9d9;
+}
+
+/* CSV UPLOAD CSS */
+.upload-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.upload-toggle-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.upload-toggle-btn .upload-icon {
+    width: 26px;
+    height: 26px;
+}
+
+.last-updated {
+    font-size: 14px;
+    color: #555;
+}
+
+.upload-container {
+    text-align: center;
+    display: none;
+}
+
+.upload-container form {
+    display: inline-block;
+}
+
+.upload-container input[type="file"] {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.upload-container button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #000000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.upload-container button:hover {
+    background-color: #0056b3;
+}
+
+/* search */
+
+#search-button {
+    padding: 8px 15px;
+    color: #ffffff;
+    background-color: #000000;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#search-button:hover {
+    background-color: transparent;
+    color: #333;
+    border: 2px solid #333;
+}
+
+#clear-search-button {
+    padding: 8px 15px;
+    background-color: transparent;
+    color: #333;
+    border: 2px solid #333;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#clear-search-button:hover {
+    color: #ffffff;
+    background-color: #000000;
+}
+
+#search-input {
+    width: 300px; 
+    padding: 8px;
+    border: 2px solid #333;
+    border-radius: 3px;
+    font-size: 14px;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.search-toggle-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    margin-right: 10px;
+}
+
+.search-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.success-message {
+    margin-top: 10px;
+    color: green;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* file upload */
+#upload-form {
+    flex-direction: column;
+    border-radius: 10px;
+    max-width: 400px;
+    margin: 20px auto;
+    gap: 20px;
+}
+
+.custom-file-upload {
+    display: inline-block;
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: transparent;
+    color: #333;
+    border: 2px solid #333;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s;
+}
+
+.custom-file-upload:hover {
+    background-color: #0056b3;
+}
+
+#csvFileInput {
+    display: none;
+}
+
+.upload-button {
+    padding: 10px 20px;
+    background-color: transparent;
+    color: #333;
+    border: 2px solid #333;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    
+}
+
+.upload-button:hover {
+    background-color: #070707;
+    color: #ffffff;
+}
+
+@media (max-width: 600px) {
+    #upload-form {
+        width: 90%;
+    }
+}
+
+/* search */
+ .highlight {
+    background-color: yellow;
+}
+.filter-sort{
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.filtersort-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.filter-sort-text {
+    font-weight: 700;
+}
+
+.filter-sort-modal {
+    display: none;
+    position: absolute;
+    background-color: white;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    z-index: 1000;
+}
+
+.filter-sort-content {
+    display: grid;
+    grid-template-areas:
+        "header header"
+        "label-start label-end"
+        "start-date end-date"
+        "sorting fulfillment"
+        "orderfrom paymentstatus"
+        "button button";
+    gap: 20px;
+}
+
+.filter-sort-content h2 {
+    margin: 0;
+    font-size: 18px;
+    text-align: center;
+    grid-area: header;
+}
+
+.filter-sort-content label {
+    padding: 10px 0;
+    margin: 0;
+}
+
+.filter-sort-content .date-label {
+    grid-area: label-start, label-end;
+    font-size: 14px;
+}
+
+#start-date {
+    margin-top: -25px;
+    grid-area: start-date;
+}
+
+#end-date {
+    margin-top: -25px;
+    grid-area: end-date;
+}
+
+#sorting {
+    width: 140px;
+    grid-area: sorting;
+}
+
+#fulfillmentfilter {
+    grid-area: fulfillment;
+}
+
+#orderfromfilter {
+    grid-area: orderfrom;
+}
+
+#paymentstatusfilter {
+    grid-area: paymentstatus;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    grid-area: button;
+}
+
+#filter-sort-clear, #filter-sort-done {
+    padding: 10px;
+    width: 48%;
+}
+
+
+/* upload css */
+/* Upload Modal Styles */
+#upload-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+#upload-modal .modal-content {
+    background-color: #fff;
+    margin: auto;
+    padding: 40px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0px;
+}
+
+#upload-modal .modal-content h2 {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    /* margin-bottom: 20px; */
+}
+
+#upload-modal .upload-area {
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    padding: 40px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+#upload-modal .upload-area:hover {
+    border-color: #888;
+}
+
+#upload-modal .upload-area img {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 20px;
+}
+
+#upload-modal .upload-area p {
+    font-size: 16px;
+    color: #666;
+}
+
+#upload-modal .upload-area .browse-files {
+    display: inline-block;
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+#upload-modal .upload-area .browse-files:hover {
+    background-color: #005f6b;
+}
+
+#csvFileInput {
+    display: none;
+}
+
+#upload-modal #file-name {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #555;
+}
+
+#upload-modal .loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+#upload-modal .dot {
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+    background-color: #333;
+    border-radius: 50%;
+    animation: dotPulse 1s infinite ease-in-out;
+}
+
+@keyframes dotPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+#upload-modal .success-message {
+    color: green;
+    text-align: center;
+    margin-top: 10px;
+}
+
+#upload-modal .exit-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+#upload-modal .exit-button img {
+    width: 20px;
+    height: 20px;
+}
+
+.modal-open {
+    overflow: hidden;
+}
+
+.upload-button {
+    padding: 10px 20px;
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 200px;
+}
+
+.upload-button:hover {
+    background-color: #005f6b;
+}

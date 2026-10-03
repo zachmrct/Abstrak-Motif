@@ -1,0 +1,54 @@
+@import "base.css";
+@import "navbar.css";
+@import "gridheader.css";
+@import "addcollection.css";
+
+.main {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.collections-grid {
+    padding: 2% 0%;
+    width: 90%;
+    margin: auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.grid-wrapper {
+    margin-bottom: 5%;
+    width: 1050px;
+    display: flex;
+    gap: 150px;
+    flex-wrap: wrap;
+}
+
+.collection-cover {
+    height: 15rem;
+    width: 15rem;
+    margin-bottom: 10px;
+    object-fit: cover;
+}
+
+.collection-item-container {
+    border: 1px solid black;
+    padding: 2%;
+    border-bottom: 10px solid black;
+    width: 240px;
+    /* height; */
+    text-align: center;
+}
+
+
+
+.correct-input {
+    border: 2px solid #0F734C;
+}
+
+.wrong-input {
+    border: 2px solid #B10201;
+}
