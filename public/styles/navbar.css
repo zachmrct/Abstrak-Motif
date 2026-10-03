@@ -1,0 +1,382 @@
+
+.header {
+    /* border-bottom: 1px solid black; */
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex: 0 0 10%;
+    padding: 1%;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+
+}
+
+.header-menu {
+   cursor: pointer;
+
+}
+
+.user-badge {
+    display: flex;
+    flex-direction: row;
+    align-items: center;    
+    gap: 1rem;
+}
+
+
+
+.menu-icon{
+    /* margin-left: 5%; */
+    height: 2rem;
+    width: 2rem;
+}
+
+.user-down-icon  {
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+
+.side-bar {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+    align-items: center;
+    height: 100%;
+    width: 20%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 1%;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+    transform: translateX(-100%);
+    z-index: 9999;
+    animation: slideIn 0.5s forwards;
+}
+
+.side-bar-backdrop {
+    /* display: none; */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 99999;
+}
+
+.side-bar .exit {
+    margin-bottom: 50px;
+    margin-left: 270px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+
+.profile-name {
+    font-size: 45px;
+    margin-bottom: 50px;
+}
+
+.profile-menu {
+   font-size: 20px;
+}
+
+.profile-menu ul {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    list-style-type: none;
+}
+
+
+
+
+.profile-menu-option {
+    transition: transform 0.3s, color 0.3s;
+    cursor: pointer;
+}
+
+.profile-menu-option:hover {
+    transform: scale(1.1); 
+}
+
+.profile-menu-option a {
+    text-decoration: none;
+    color: black;
+}
+
+
+
+.profile-logout {
+    font-size: 20px;
+    margin-top: 50px;
+
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.user-popup {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: white;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 5px;
+    margin-top: 121px;
+}
+
+.user-popup ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.user-popup li {
+    padding: 10px 20px;
+}
+
+.user-popup li a {
+    text-decoration: none;
+    color: black;
+}
+
+.user-popup li a:hover {
+    background-color: #f1f1f1;
+}
+
+.edit-profile-modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0,0,0);
+        background-color: rgba(0,0,0,0.4);
+        padding-top: 60px;
+    }
+
+    .edit-profile-form {
+        background-color: #fefefe;
+        margin: 5% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        display: flex;
+    }
+
+    .edit-profile-form-left, .edit-profile-form-right {
+        flex: 1;
+        padding: 10px;
+    }
+
+    .profile-picture img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .exit-form {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .exit-form:hover,
+    .exit-form:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .user-detail-input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        box-sizing: border-box;
+    }
+
+    /* .save-changes-button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 15px 20px;
+        margin: 10px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+    }
+
+    .save-changes-button:hover {
+        background-color: #45a049;
+    } */
+
+    /* edit profile  */
+    /* Modal Styles */
+.edit-profile-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+
+.edit-profile-form {
+    width: 70%;
+    background-color: #fcfcfc;
+    height: 550px;
+    display: flex;
+    flex-direction: row;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15), 0 6px 6px rgba(0, 0, 0, 0.10);
+    border-radius: 25px;
+    padding: 3%;
+    padding-top: 7%;
+    position: relative;
+    gap: 3rem;
+}
+
+.edit-profile-form-left {
+    flex: 0 0 40%;
+    display: flex;
+    justify-content: center;
+}
+
+.edit-profile-title {
+    margin-top: 20px;
+    font-family: 'DM Sans', sans-serif;
+    position: fixed;
+    top: 125px;
+    left: 650px;
+}
+
+.edit-profile-form-right {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: 100%;
+}
+
+.form-1 {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+#upload-profile {
+    opacity: 0.6;
+}
+
+.upload-icon-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.main-picture {
+    min-height: 317px;
+    max-height: 317px;
+    min-width: 350px;
+    max-width: 350px;
+    overflow: hidden;
+    border: 1px solid #c2c2c2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-picture:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+#profileImageInput {
+    display: none;
+}
+
+.user-detail-input {
+    font-family: 'DM Sans', sans-serif;
+    height: 50px;
+    border: none;
+    width: 500px;
+    border-radius: 10px;
+    border: 1px solid #c2c2c2;
+    background-color: #f3f3f3;
+    padding: 2%;
+}
+
+.user-detail-input:focus {
+    outline: none;
+}
+
+
+.show-password {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.exit-form {
+    font-size: 12px;
+    position: absolute;
+    right: 55px;
+    top: 30px;
+    cursor: pointer;
+}
+
+.save-changes-button {
+    width: 500px;
+    height: 60px;
+    border: none;
+    background-color: #000000;
+    color: #ffffff;
+    font-family: "DM Sans";
+}
+
+.save-changes-button:hover {
+    cursor: pointer;
+    background-color: rgb(59, 58, 58);
+    color: white;
+}
+
+.wrong {
+    background-color: #ffd8d8;
+}
+
+.correct-input {
+    border: 2px solid #0F734C;
+}
+
+.wrong-input {
+    border: 2px solid #B10201;
+}
