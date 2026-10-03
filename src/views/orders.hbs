@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/orders.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/scripts/orders.js"></script>
+    {{!-- font awesome --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <title>Orders - AM Invento</title>
+    <link rel="icon" type="image/x-icon" href="/uploads/web-logo.png">
+
+</head>
+<body>
+    <div class="main">
+        {{>navbar}}
+        {{>gridheader}}
+        <div class="catalogue">
+            <div class="search-container">
+                <div class="search-button-container">
+                     <button id="toggle-search" class="search-toggle-btn">
+                    <img src="/assets/search.png" alt="Search Icon" class="search-icon">
+                </button>
+                </div>
+                <div id="search-bar" class="search-bar" style="display: none;">
+                    <input type="text" id="search-input" placeholder="Search orders...">
+                    <button id="search-button">Search</button>
+                     <button id="clear-search-button">Clear</button>
+                </div>
+
+                <!--add the filter and sort here-->
+                <div class="filter-sort">
+                    <img src="/assets/setting.png" alt="Filter/Sort Icon" class="filtersort-icon">
+                    <span class="filter-sort-text">FILTER AND SORT</span>
+                </div>
+
+                <div id="filter-sort-modal" class="filter-sort-modal">
+                    <div class="filter-sort-content">
+                        <h2>FILTER AND SORT</h2>
+                        
+                        <label for="start-date" class="date-label">Start Date</label>
+                        <label for="end-date" class="date-label">End Date</label>
+                        
+                        <input type="date" id="start-date" class="startdatefilter">
+                        <input type="date" id="end-date" class="enddatefilter">
+                        
+                        <select id="sorting" class="sorting">
+                            <option value="">Sort</option>
+                            <option value="ordernumascending">Order Number (ascending)</option>
+                            <option value="ordernumdescending">Order Number (descending)</option>
+                            <option value="orderdatelatest">Latest - earliest orders</option>
+                            <option value="orderdateearliest">Earliest - latest orders</option>
+                        </select>
+                        
+                        <select id="fulfillmentfilter" class="fulfillmentfilter">
+                            <option value="">Fulfillment Status</option>
+                            <option value="Fulfilled">Fulfilled</option>
+                            <option value="Unfulfilled">Unfulfilled</option>
+                        </select>
+                        
+                        <select id="orderfromfilter" class="orderfromfilter">
+                            <option value="">Ordered From</option>
+                            <option value="WIX website">Wix Website</option>
+                            <option value="Private Message">Private Message</option>
+                            <option value="In-person">In-person</option>
+                        </select>
+                        
+                        <select id="paymentstatusfilter" class="paymentstatusfilter">
+                            <option value="">Payment Status</option>
+                            <option value="Paid">Paid</option>
+                            <option value="Unpaid">Unpaid</option>
+                        </select>
+                        
+                        <div class="button-group">
+                            <button id="filter-sort-clear" class="filter-sort-clear">Clear</button>
+                            <button id="filter-sort-done" class="filter-sort-done">Done</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="orders-table">
+                <thead>
+                    <tr>
+                        <th>Order No.</th>
+                        <th>Date</th>
+                        <th>Total Order Quantity</th>
+                        <th>Payment Method</th>
+                        <th>Fulfillment Status</th>
+                        <th>Payment Status</th>
+                        <th>Total</th>
+                        <th>Shipping Rate</th>
+                        <th>Ordered From</th>
+                    </tr>
+                </thead>
+                <tbody id="orders-body">
+                    {{#each initialOrders}}
+                        <tr class="orders-row">
+                            <td>{{orderNumber}}</td>
+                            <td>{{formatDate dateCreated}}</td>
+                            <td>{{totalOrderQuantity}}</td>
+                            <td>{{paymentMethod}}</td>
+                            <td>{{fulfillmentStatus}}</td>
+                            <td>{{paymentStatus}}</td>
+                            <td>{{total}}</td>
+                            <td>{{shippingRate}}</td>
+                            <td>{{orderedFrom}}</td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+
+{{!-- upload csv this part --}}
+            <div class="upload-header">
+            <button id="toggle-upload" class="upload-toggle-btn">
+                <img src="/assets/upload-file.svg" alt="Upload Icon" class="upload-icon">
+            </button>
+            <div class="last-updated">
+                Last updated: <span id="last-updated-date">{{lastUpdatedDate}}</span>
+            </div>
+        </div>
+
+       <div id="upload-modal" class="modal">
+            <div class="modal-content">
+                <div class="exit-button">
+                    <img src="/assets/back.png" alt="Close" class="exit-upload-modal">
+                </div>
+                <h2>Upload CSV</h2>
+                <form id="upload-form" enctype="multipart/form-data">
+                    <div class="upload-area" id="upload-area">
+                        <img src="/assets/upload-icon.png" alt="Upload Icon">
+                        <p>Drag & Drop files here</p>
+                        <p>or</p>
+                        <label for="csvFileInput" class="browse-files">Browse Files</label>
+                        <input type="file" id="csvFileInput" name="csvFile" accept=".csv">
+                    </div>
+                    <div id="file-name"></div>
+                    <button type="submit" class="upload-button">Upload CSV</button>
+                </form>
+                <div class="loader" id="loader" style="display: none;">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+                <div class="success-message" id="success-message" style="display: none;">
+                    File uploaded successfully!
+                </div>
+            </div>
+        </div>
+
+
+
+            <div class="pagination-container">
+                <div class="pagination">
+                    <button id="prev-button" style="display: none;">Previous</button>
+                    <span id="page-number">{{currentPage}}</span>
+                    <span>of</span>
+                    <span id="total-pages">{{totalPages}}</span>
+                    <button id="next-button">Next</button>
+                </div>
+            </div>
+            <div class="upload-container">
+                <form id="upload-form" enctype="multipart/form-data">
+                    <input type="file" id="csvFileInput" name="csvFile" accept=".csv">
+                    <button type="submit">Upload CSV</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="view-product-modal">
+            <div class="view-product-content">
+                <div class="exit-button">
+                    <img src="assets/back.png" alt="" class="exit-view-product-modal">
+                </div>
+                <h1>Order #<span id="order-number">8286</span></h1>
+                <p>Ordered <span id="date">October 2, 2004</span> <span id="time">2:00 PM</span> from <span id="order-source">Instagram</span></p>
+                <div class="items">
+                    <div class="itemdetails">
+                        <div class="nameandpic">
+                            <img src="uploads/products/self_portrait_tee.png" alt="" class="itempic">
+                            <span>"Self-Portrait" Tee</span>
+                        </div>
+                        <span class ="priceperitem">₱800.50</span>
+                        <span class="quantity">1 pc</span>
+                        <span class="totalprice">₱885.50</span>
+                    </div>
+                </div>
+                
+                <div class="payment">
+                    <h3>Payment</h3>
+                    <div class="order-calculation">
+                        <div><span>Items</span> <span id="order-itemtotal">₱0.00</span></div>
+                        <div><span>Shipping</span> <span id="order-shipping">₱0.00</span></div>
+                        <div><span>Total</span> <span id="order-total">₱0.00</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                        
+
+        <div id ="add-order-modal" class="modal">
+            <div class="modal-content">
+               <div class="exit-button">
+                    <img src="assets/back.png" alt="" class="exitordermodal">
+                </div>
+                
+                <div class="form-title">
+                    <h1>ADD ORDER</h1>
+                </div>
+
+                <input type="number" class="order-num" placeholder="Order Number">
+                
+                <select class="orderedfrom">
+                    <option value="">Ordered From</option>
+                    <option value="In-person">In-person</option>
+                    <option value="Private Message">Private Message</option>
+                </select>
+
+                <input type="date" id="order-date" class="order-date" placeholder="Order Date">
+
+                <select class="fulfillmentstatus">
+                    <option value="">Fulfillment Status</option>
+                    <option value="Fulfilled">Fulfilled</option>
+                    <option value="Unfulfilled">Unfulfilled</option>
+                    <option value="Canceled">Canceled</option>
+                </select>
+
+                <select class="paymentmethod">
+                    <option value="">Payment Method</option>
+                    <option value="Offline">Offline</option>
+                    <option value="Online">Online</option>
+                </select>
+
+                <select class="paymentstatus">
+                    <option value="">Payment Status</option>
+                    <option value="Paid">Paid</option>
+                    <option value="Unpaid">Unpaid</option>
+                </select>
+                
+                <input type="number" class="shipping-fee" placeholder="Shipping Fee">
+                <input type="text" id="voucher" class="voucher" placeholder="Voucher">
+                
+                <div class="itemslist" id = "itemslist">
+                    <h3>Items Ordered</h3>
+                    <span id="plus-sign" class="plus-sign">+</span>
+                    <div id="cartitems">
+                        
+                    </div>
+                </div>
+
+                <div class="payment">
+                    <h3>Payment</h3>
+                    <div><span>Items</span> <span class="payment-itemtotal">₱0.00</span></div>
+                    <div><span>Shipping</span> <span class="payment-shipping">₱0.00</span></div>
+                    <div><span>Tax</span> <span class="payment-taxtotal">₱0.00</span></div>
+                    <div><span>Discount</span> <span class="payment-discount">₱0.00</span></div>
+                    <div><span>Total</span> <span class="payment-total">₱0.00</span></div>
+                </div>
+                <div class="submit">
+                    <button class="submitbtn">Submit</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="product-list-modal" class="modal">
+            <div class="modal-content">
+                <div class="exit-button">
+                    <img src="assets/back.png" alt="" class="exit-product-list">
+                </div>
+                <div class="form-title">
+                    <h1>AVAILABLE PRODUCTS</h1>
+                </div>
+                <div class="gallery" id="product-gallery">
+                    
+                </div>
+            </div>
+        </div>
+
+        <div id="product-details-modal" class="modal">
+            <div class="modal-content product-details-modal-content">
+                <div class="exit-button">
+                    <img src="assets/back.png" alt="Exit" class="exit-product-details">
+                </div>
+                <div class="product-details">
+                    <div class="product-info">
+                        <div class="product-image">
+                            <img src="" alt="Product Image" class="img">
+                        </div>
+                        <div class="product-description">
+                            <h1 class="name"></h1>
+                            <p class="sku"></p>
+                        </div>
+                    </div>
+                    <div class="variation-controls">
+                        <select id="variation" class="variations"></select>
+                        <div class="quantity-controls">
+                            <button class="minus">−</button>
+                            <span class="cartquantity">1</span>
+                            <button class="plus">+</button>
+                        </div>
+                        <div class="price">₱<span class="price-value">0.00</span></div>
+                    </div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        $('.view-product-modal').hide();
+        
+    </script>
+
+</body>
+</html>

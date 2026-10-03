@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/collections.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/scripts/addcollection.js"></script>
+    <title>Collections - AM Invento</title>
+    <link rel="icon" type="image/x-icon" href="/uploads/web-logo.png">
+
+        {{!-- font awesome --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+    <title>Document</title>
+</head>
+<body>
+    <div class="main">
+        {{>navbar}}
+        {{>gridheader}}
+
+        <div class="collections-grid">
+            <div class="grid-wrapper">
+
+                {{#each collections}}
+                        <div class="collection-item-container" data-id="{{_id}}">
+                            <img src="/uploads/collections/{{collectionPicture}}" alt="" class="collection-cover">
+                                <p>{{name}}</p>
+                        </div>
+                        
+                {{/each}}
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="add-collection-modal">
+
+     <div class="collection-form">
+            <div class="exit-button">
+                <img src="assets/back.png" alt="" class="exit">
+            </div>
+            
+            <div class="form-title">
+                <h1>ADD COLLECTION</h1>
+            </div>
+
+            <div class="form-fields">
+                <div class="collection-left">
+                    <div class="main-picture">
+                        <img src="/assets/upload-icon.png" name="collectionPicture" alt="" id="upload-icon" accept="image/*">
+                        <input type="file" name="main-image" id="imageInput">
+                    </div>
+                </div>
+                <div class="collection-right">
+                    
+                    <input type="text" name="" placeholder="Name" id="collection-name-input" class="text-input" required>
+                    <textarea name="" placeholder="Description" id="collection-description-input" class="text-input"></textarea>
+                    <button class="submit-collection-button">Add Collection</button>
+                </div>
+            </div>
+          
+        </div>
+    </div>
+
+</body>
+
+<script>
+    $(".add-collection-modal").hide();
+    $(document).ready(function(){
+
+        $(".grid-header-add-button").click(function(){
+            $(".add-collection-modal").show();
+        });
+
+         $(".collection-item-container").click(function(){
+            window.location.href = "/collections/" + $(this).data("id");
+        });
+    });
+</script>
+</html>
