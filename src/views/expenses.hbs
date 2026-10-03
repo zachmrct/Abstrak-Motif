@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expenses</title>
+    <link rel="stylesheet" href="/styles/expenses.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <script src="/scripts/general.js"></script>
+</head>
+
+<body>
+    <div class="main">
+        {{>navbar}}
+        <div class="container">
+            <div class="charts-section">
+                <h2>Charts</h2>
+                <div class="charts-container">
+                    <div class="chart-wrapper">
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="collectionChart"></canvas>
+                        <div class="collection-chart-nav">
+                            <button id="prevCollection" class="arrow-button prev-arrow"></button>
+                            <button id="nextCollection" class="arrow-button next-arrow"></button>
+                        </div>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="totalCostsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="recent-expenses">
+                {{#each recentExpenses}}
+                <div class="expense-card">
+                    <p><strong>Name:</strong> {{name}}</p>
+                    <p><strong>Collection:</strong> {{collectionName}}</p>
+                    <p><strong>Date:</strong> {{formatDate date}}</p>
+                    <p><strong>Amount:</strong> {{amount}}</p>
+                    <p><strong>Quantity:</strong> {{quantity}}</p>
+                    <p><strong>Payment Method:</strong> {{paymentMethod}}</p>
+                    <p><strong>Category:</strong> {{category}}</p>
+                    <p><strong>Description:</strong> {{description}}</p>
+                    <p><strong>Receipt:</strong>
+                        {{#if receiptUrl}}
+                        <a href="{{receiptUrl}}" target="_blank">View Receipt</a>
+                        {{else}}
+                        No Receipt
+                        {{/if}}
+                    </p>
+                </div>
+                {{/each}}
+            </div>
+            <header>
+                <h1>Expenses</h1>
+                <button id="add-expense-btn" class="btn">Add Expense</button>
+                <button id="expense-filter-sort-btn" class="btn">Filter and Sort</button>
+            </header>
+            <section class="expenses">
+                <table class="orders-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Collection</th>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Quantity</th>
+                            <th>Payment Method</th>
+                            <th>Category</th>
+                            <th>Description</th>
+                            <th>Receipt</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="expenses-list">
+                        {{#each expenses}}
+                        <tr>
+                            <td>{{name}}</td>
+                            <td>{{collectionName}}</td>
+                            <td>{{formatDate date}}</td>
+                            <td>{{amount}}</td>
+                            <td>{{quantity}}</td>
+                            <td>{{paymentMethod}}</td>
+                            <td>{{category}}</td>
+                            <td>{{description}}</td>
+                            <td>
+                                {{#if receiptUrl}}
+                                <a href="{{receiptUrl}}" target="_blank">View Receipt</a>
+                                {{else}}
+                                No Receipt
+                                {{/if}}
+                            </td>
+                            <td>
+                                <button class="edit-btn btn" data-id="{{_id}}">Edit</button>
+                                <button class="delete-btn btn" data-id="{{_id}}">Delete</button>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </section>
+            <div class="pagination-container">
+                <button id="prev-expense-button">Previous</button>
+                <span id="expense-page-number">1</span>
+                <span class="of-text">of</span>
+                <span id="total-expense-pages">1</span>
+                <button id="next-expense-button">Next</button>
+            </div>
+        </div>
+    </div>
+
+<div id="filter-sort-modal-expense" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Filter and Sort Expenses</h2>
+        <form id="filter-sort-form-expense">
+            <div class="form-row">
+                <div class="form-column">
+                    <label for="start-date-expense" class="date-label">Start Date:</label>
+                    <input type="date" id="start-date-expense" class="startdatefilter">
+                </div>
+                <div class="form-column">
+                    <label for="end-date-expense" class="date-label">End Date:</label>
+                    <input type="date" id="end-date-expense" class="enddatefilter">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-column">
+                    <label for="sorting-expense">Sort:</label>
+                    <select id="sorting-expense" class="sorting">
+                        <option value="">Sort</option>
+                        <option value="dateasc">Date (ascending)</option>
+                        <option value="datedesc">Date (descending)</option>
+                        <option value="amountasc">Amount (ascending)</option>
+                        <option value="amountdesc">Amount (descending)</option>
+                    </select>
+                </div>
+                <div class="form-column">
+                    <label for="quantity-filter">Quantity:</label>
+                    <div class="quantity-container">
+                        <select id="quantity-filter-type" class="quantityfiltertype">
+                            <option value="">Select</option>
+                            <option value="lower">Lower than</option>
+                            <option value="higher">Higher than</option>
+                            <option value="equal">Equal to</option>
+                        </select>
+                        <input type="number" id="quantity-filter-value" class="quantityfiltervalue quantity-input" min="0">
+                    </div>
+                </div>
+                <div class="form-column">
+                    <label for="filter-payment-method">Payment Method:</label>
+                    <select id="filter-payment-method" class="paymentmethodfilter">
+                        <option value="">All</option>
+                        <option value="Cash">Cash</option>
+                        <option value="Gcash">Gcash</option>
+                        <option value="Credit/Debit Card">Credit/Debit Card</option>
+                        <option value="Bank Transfer">Bank Transfer</option>
+                        <option value="Cryptocurrency">Cryptocurrency</option>
+                        <option value="Contactless Payment">Contactless Payment</option>
+                        <option value="Buy Now, Pay Later">Buy Now, Pay Later</option>
+                        <option value="Cash on Delivery (COD)">Cash on Delivery (COD)</option>
+                        <option value="Others">Others</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-column">
+                    <label for="filter-collection">Collection:</label>
+                    <select id="filter-collection" class="collectionfilter"></select>
+                </div>
+                <div class="form-column">
+                    <label for="filter-category">Category:</label>
+                    <select id="filter-category" class="categoryfilter">
+                        <option value="">All</option>
+                        <option value="Rent/Utility">Rent/Utility</option>
+                        <option value="Equipment">Equipment</option>
+                        <option value="Fabric">Fabric</option>
+                        <option value="Labor Fee">Labor Fee</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Misc (Delivery Fee, Gas, etc)">Misc (Delivery Fee, Gas, etc)</option>
+                        <option value="Others">Others</option>
+                    </select>
+                </div>
+            </div>
+            <div class="button-group">
+                <button type="button" id="filter-sort-clear-expense" class="filter-sort-clear">Clear</button>
+                <button type="button" id="filter-sort-done-expense" class="filter-sort-done">Done</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+    <!-- Add/Edit Expense Modal -->
+    <div id="expense-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modal-title">Add Expense</h2>
+            <form id="expense-form">
+                <input type="hidden" id="expense-id">
+                <div class="form-row">
+                    <div class="form-column">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-column">
+                        <label for="collection">Collection:</label>
+                        <select id="collection" name="collection" required></select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-column">
+                        <label for="date">Date:</label>
+                        <input type="date" id="date" name="date" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-column">
+                            <label for="payment-method">Payment Method:</label>
+                            <select id="payment-method" name="payment-method" required>
+                                <option value="Cash">Cash</option>
+                                <option value="Cash">Gcash</option>
+                                <option value="Credit/Debit Card">Credit/Debit Card</option>
+                                <option value="Bank Transfer">Bank Transfer</option>
+                                <option value="Cryptocurrency">Cryptocurrency</option>
+                                <option value="Contactless Payment">Contactless Payment</option>
+                                <option value="Buy Now, Pay Later">Buy Now, Pay Later</option>
+                                <option value="Cash on Delivery (COD)">Cash on Delivery (COD)</option>
+                                <option value="Others">Others</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-column">
+                        <label for="amount">Amount:</label>
+                        <input type="number" id="amount" name="amount" required>
+                    </div>
+                    <div class="form-column">
+                        <label for="quantity">Quantity:</label>
+                        <input type="number" id="quantity" name="quantity" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-column">
+                        <label for="category">Category:</label>
+                        <select id="category" name="category" required>
+                            <option value="Rent/Utility">Rent/Utility</option>
+                            <option value="Equipment">Equipment</option>
+                            <option value="Fabric">Fabric</option>
+                            <option value="Labor Fee">Labor Fee</option>
+                            <option value="Marketing">Marketing</option>
+                            <option value="Misc (Delivery Fee, Gas, etc)">Misc (Delivery Fee, Gas, etc)</option>
+                            <option value="Others">Others</option>
+                        </select>
+                    </div>
+                    <div class="form-column">
+                        <label for="receipt-url">Receipt URL:</label>
+                        <input type="url" id="receipt-url" name="receipt-url">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <label for="description">Description:</label>
+                    <textarea id="description" name="description" required></textarea>
+                </div>
+                <button type="submit" class="btn">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/scripts/expenses.js"></script>
+
+        <script>
+        $(".expense-modal").hide();
+        $('.filter-sort-modal-expense').hide();
+    </script>
+    
+    
+</body>
+
+</html>
+
+
+    

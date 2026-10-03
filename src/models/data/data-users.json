@@ -1,0 +1,58 @@
+[
+  {
+    "_id": "65e57ac3a149f9de594a9e2a",
+    "username": "Max_Verstappen",
+    "password": "12345678",
+    "email": "max_emilian_verstappen@gmail.com",
+    "profilePicture": "verstappen.jpg",
+    "deletedAt": null,
+    "firstName": "Max Emilian",
+    "lastName": "Verstappen",
+    "bio": "",
+    "role": "user",
+    "createdAt": "2023-07-01T00:00:00.000Z",
+    "updatedAt": "2023-07-01T00:00:00.000Z"
+  },
+  {
+    "_id": "65e57ac3a149f9de594a9e2b",
+    "username": "Abstrak_Admin",
+    "password": "TOUCH.DOWN!",
+    "email": "admin@gmail.com",
+    "profilePicture": "hamilton.jpg",
+    "deletedAt": null,
+    "firstName": "Lewis",
+    "lastName": "Hamilton",
+    "bio": "",
+    "role": "admin",
+    "createdAt": "2023-07-01T00:00:00.000Z",
+    "updatedAt": "2023-07-01T00:00:00.000Z"
+  },
+  {
+    "_id": "65e57ac3a149f9de594a9e2c",
+    "username": "Charles_Leclerc",
+    "password": "Ferrari123",
+    "email": "charles_leclerc@gmail.com",
+    "profilePicture": "leclerc.jpg",
+    "deletedAt": null,
+    "firstName": "Charles",
+    "lastName": "Leclerc",
+    "bio": "",
+    "role": "user",
+    "createdAt": "2023-07-01T00:00:00.000Z",
+    "updatedAt": "2023-07-01T00:00:00.000Z"
+  },
+  {
+    "_id": "65e57ac3a149f9de594a9e2d",
+    "username": "Sebastian_Vettel",
+    "password": "4timesChamp",
+    "email": "sebastian_vettel@gmail.com",
+    "profilePicture": "vettel.jpg",
+    "deletedAt": null,
+    "firstName": "Sebastian",
+    "lastName": "Vettel",
+    "bio": "",
+    "role": "user",
+    "createdAt": "2023-07-01T00:00:00.000Z",
+    "updatedAt": "2023-07-01T00:00:00.000Z"
+  }
+]

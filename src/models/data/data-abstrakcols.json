@@ -1,0 +1,24 @@
+[
+  {
+    "_id": "6651ead6a17e4939441ea328",
+    "name": "Made Human",
+    "pieces": [
+      "6651ead6a17e4939441ea325",
+      "6651ead6a17e4939441ea326",
+      "6651ead6a17e4939441ea327"
+    ],
+    "collectionPicture": "madehuman.jpg",
+    "__v": 1
+  },
+  {
+    "_id": "6651ead6a17e4939441ea322",
+    "name": "Love Letters",
+    "pieces": [
+      "6651ead6a17e4939441ea32a",
+      "6651ead6a17e4939441ea32b",
+      "6651ead6a17e4939441ea32f"
+    ],
+    "collectionPicture": "love_letters.jpg",
+    "__v": 1
+  }
+]

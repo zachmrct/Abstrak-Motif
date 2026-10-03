@@ -1,0 +1,182 @@
+<div class="header">
+    <div class="header-menu">
+        <img src="/assets/menu.png" alt="Menu" class="menu-icon">
+    </div>
+    <div class="header-logo-title">
+        ABSTRÄKMOTIF INVENTO
+    </div>
+    <div class="header-user">
+        <div class="user-badge" id="user-badge">
+            <p class="user-name">Taylor Swift</p>
+            <img src="/assets/user-down.png" alt="" class="user-down-icon">
+            <div id="user-popup" class="user-popup">
+                <ul>
+                    <li><a href="#" id="edit-profile-btn">Edit Profile</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="side-bar-backdrop">
+    <div class="side-bar">
+        <p class="exit">x</p>
+        <div class="profile">
+            <p class="profile-name">Taylor Swift</p>
+        </div>
+        <div class="profile-menu">
+            <ul>
+                <li class="profile-menu-option">
+                    <a href="/">
+                        <i class="fa-solid fa-shirt"></i>   Products
+                    </a>
+                </li>
+                <li class="profile-menu-option">
+                    <a href="/users">
+                        <i class="fa-solid fa-user"></i>    Users
+                    </a>
+                </li>
+                <li class="profile-menu-option">
+                    <a href="/orders">
+                        <i class="fa-solid fa-cart-shopping"></i>    Orders
+                    </a>
+                </li>
+                <li class="profile-menu-option">
+                    <a href="/expenses">
+                        <i class="fa-solid fa-money-bill"></i>  Expenses
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="profile-logout">
+            <p class="profile-menu-option"><i class="fa-solid fa-right-from-bracket"></i>   Logout</p>
+        </div>
+    </div>
+</div>
+
+<!-- Include the edit profile modal -->
+{{> editProfileModal}}
+
+<script>
+$(document).ready(function() {
+    $(".menu-icon").click(function() {
+        $(".side-bar-backdrop").show();
+    });
+
+    $(".exit").click(function() {
+        $(".side-bar-backdrop").hide();
+    });
+
+    $(".side-bar-backdrop").hide();
+
+    // Dropdown Popup functionality
+    $("#user-badge").click(function(event) {
+        event.stopPropagation();
+        $("#user-popup").toggle();
+    });
+
+    $(document).click(function() {
+        $("#user-popup").hide();
+    });
+
+    // Edit Profile Modal functionality
+    var editProfileModal = document.getElementById("edit-profile-modal");
+    var editProfileBtn = document.getElementById("edit-profile-btn");
+    var closeEditProfileModal = document.getElementById("close-edit-profile-modal");
+
+    editProfileBtn.onclick = function() {
+        $.ajax({
+            url: "/api/users/profile",
+            type: "GET",
+            success: function(response) {
+                console.log('Profile data received:', response);
+
+                $("#first-name-input").val(response.firstName);
+                $("#last-name-input").val(response.lastName);
+                $("#role-input").val(response.role);
+                if (response.profilePicture) {
+                    $("#upload-profile").attr("src", "/uploads/users/" + response.profilePicture);
+                } else {
+                    $("#upload-profile").attr("src", "/assets/upload-icon.png");
+                }
+                editProfileModal.style.display = "block";
+            },
+            error: function(error) {
+                alert("Failed to load profile data");
+            }
+        });
+    }
+
+    closeEditProfileModal.onclick = function() {
+        editProfileModal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == editProfileModal) {
+            editProfileModal.style.display = "none";
+        }
+    }
+
+    // Handle profile picture upload preview
+    $(".main-picture").click(function(event) {
+        $("#profileImageInput").click();
+    });
+
+    $("#profileImageInput").click(function(event) {
+        event.stopPropagation();
+    });
+
+    $("#profileImageInput").change(function(event) {
+        var file = this.files[0];
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+            $("#upload-profile").attr("src", e.target.result);
+        }
+        reader.readAsDataURL(file);
+    });
+
+    // Toggle password visibility
+    function togglePasswordVisibility(field) {
+        var passwordField = document.getElementById(field);
+
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+        } else {
+            passwordField.type = "password";
+        }
+    }
+
+    document.querySelector('.show-password').addEventListener('click', function() {
+        togglePasswordVisibility('password-input');
+    });
+
+    // Save Changes functionality
+    $("#save-changes-button").click(function() {
+        var formData = new FormData();
+        formData.append("firstName", $("#first-name-input").val());
+        formData.append("lastName", $("#last-name-input").val());
+        formData.append("role", $("#role-input").val());
+        formData.append("password", $("#password-input").val());
+        formData.append("profilePicture", $("#profileImageInput")[0].files[0]);
+
+        $.ajax({
+            url: "/api/users/update-profile",
+            type: "PUT",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                alert("Profile updated successfully");
+                // Optionally update the displayed user name and profile picture
+                editProfileModal.style.display = "none";
+            },
+            error: function(error) {
+                alert("Failed to update profile");
+            }
+        });
+    });
+});
+</script>
+

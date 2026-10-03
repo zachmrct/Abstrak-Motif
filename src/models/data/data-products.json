@@ -1,0 +1,201 @@
+[
+  {
+    "_id": "6651ead6a17e4939441ea32a",
+    "name": "Letter Services Trucker Cap",
+    "picture": "letter_services_trucker_cap.png",
+    "price": 540,
+    "SKU": "CAP001",
+    "material": ["Cotton", "Polyester"],
+    "variations": [
+      {
+        "variation": "One Size",
+        "stocks": 2,
+        "manufacturingCost": 8
+      }
+    ],
+    "lastInventoryUpdate": "2023-12-01T00:00:00.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "6651ead6a17e4939441ea32b",
+    "name": "Letterless Button-up Shirt",
+    "picture": "letterless_button_up_shirt_a.png",
+    "price": 1190,
+    "SKU": "SHIRT002A",
+    "material": ["Cotton", "Polyester"],
+    "variations": [
+      {
+        "variation": "A",
+        "stocks": 1,
+        "manufacturingCost": 10
+      },
+      {
+        "variation": "B",
+        "stocks": 5,
+        "manufacturingCost": 10
+      },
+      {
+        "variation": "C",
+        "stocks": 0,
+        "manufacturingCost": 10
+      },
+      {
+        "variation": "D",
+        "stocks": 3,
+        "manufacturingCost": 10
+      }
+    ],
+    "lastInventoryUpdate": "2023-11-01T00:00:00.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "6651ead6a17e4939441ea32f",
+    "name": "Memories Button-up Shirt",
+    "picture": "memories_button_up_shirt_a.png",
+    "price": 1190,
+    "SKU": "SHIRT003A",
+    "material": ["Cotton", "Polyester"],
+    "variations": [
+      {
+        "variation": "A",
+        "stocks": 1,
+        "manufacturingCost": 10
+      },
+      {
+        "variation": "B",
+        "stocks": 0,
+        "manufacturingCost": 10
+      },
+      {
+        "variation": "C",
+        "stocks": 10,
+        "manufacturingCost": 10
+      },
+      {
+        "variation": "D",
+        "stocks": 0,
+        "manufacturingCost": 10
+      },
+      {
+        "variation": "E",
+        "stocks": 5,
+        "manufacturingCost": 10
+      },
+      {
+        "variation": "F",
+        "stocks": 9,
+        "manufacturingCost": 10
+      }
+    ],
+    "lastInventoryUpdate": "2023-10-01T00:00:00.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "6651ead6a17e4939441ea325",
+    "name": "Hand-Drawn Tee",
+    "picture": "hand_drawn_tee.png",
+    "price": 745,
+    "SKU": "AMK0123001",
+    "material": ["Cotton"],
+    "variations": [
+      {
+        "variation": "S",
+        "stocks": 15,
+        "manufacturingCost": 8
+      },
+      {
+        "variation": "M",
+        "stocks": 10,
+        "manufacturingCost": 8
+      },
+      {
+        "variation": "L",
+        "stocks": 5,
+        "manufacturingCost": 8
+      }
+    ],
+    "lastInventoryUpdate": "2023-09-01T00:00:00.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "6651ead6a17e4939441ea326",
+    "name": "Self-Portrait Tee",
+    "picture": "self_portrait_tee.png",
+    "price": 795,
+    "SKU": "AMK0123002",
+    "material": ["Cotton"],
+    "variations": [
+      {
+        "variation": "S",
+        "stocks": 10,
+        "manufacturingCost": 7
+      },
+      {
+        "variation": "M",
+        "stocks": 20,
+        "manufacturingCost": 7
+      },
+      {
+        "variation": "L",
+        "stocks": 10,
+        "manufacturingCost": 7
+      }
+    ],
+    "lastInventoryUpdate": "2023-08-01T00:00:00.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "6651ead6a17e4939441ea327",
+    "name": "Human Arts Project Tee",
+    "picture": "human_arts_project_tee.png",
+    "price": 795,
+    "SKU": "AMK0123003",
+    "material": ["Cotton"],
+    "variations": [
+      {
+        "variation": "S",
+        "stocks": 0,
+        "manufacturingCost": 10
+      },
+      {
+        "variation": "M",
+        "stocks": 0,
+        "manufacturingCost": 10
+      },
+      {
+        "variation": "L",
+        "stocks": 0,
+        "manufacturingCost": 10
+      }
+    ],
+    "lastInventoryUpdate": "2023-07-01T00:00:00.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "6651ead6a17e4939441ea328",
+    "name": "Self-Portrait Button-up Shirt",
+    "picture": "self_portrait_button_up_shirt.png",
+    "price": 795,
+    "SKU": "SHIRT004",
+    "material": ["Cotton"],
+    "variations": [
+      {
+        "variation": "S",
+        "stocks": 0,
+        "manufacturingCost": 10
+      },
+      {
+        "variation": "M",
+        "stocks": 0,
+        "manufacturingCost": 10
+      },
+      {
+        "variation": "L",
+        "stocks": 0,
+        "manufacturingCost": 10
+      }
+    ],
+    "lastInventoryUpdate": "2023-06-01T00:00:00.000Z",
+    "__v": 0
+  }
+]

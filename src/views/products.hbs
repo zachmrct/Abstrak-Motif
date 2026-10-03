@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/products.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/scripts/general.js"></script>
+    <script src="/scripts/product-helpers.js"></script>
+    <script src="/scripts/products.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    {{!-- font awesome --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <title>Products - AM Invento</title>
+    <link rel="icon" type="image/x-icon" href="/uploads/web-logo.png">
+
+</head>
+<body>
+    <div class="main">
+        {{>navbar}}
+        {{>gridheader}}
+        <div class="catalogue">
+            <div class="gallery">
+                {{#each products}}
+                    <div class="container" data-id="{{_id}}" data-name="{{name}}" data-price="{{price}}" data-sku="{{SKU}}" data-materials="{{material}}" data-picture="/uploads/products/{{picture}}">
+                        <div class="product-pic-container">
+                            <img src="/uploads/products/{{picture}}" alt="" class="product-pic">
+                        </div>
+                        <div class="product-name">
+                            <p class="product-name-text">{{name}}</p>
+                            <p class="product-stock {{#stockStatus totalStock}}{{/stockStatus}}-stock">{{totalStock}} in stock</p>
+                            <span class="three-dots-product-option">&nbsp;&nbsp;&#8286;</span>
+                        </div>
+                        <div class="product-options-popup">
+                            <p><a href="" class="product-option-popup edit-product">Edit</a></p>
+                            <p><a href="" class="product-option-popup delete-product">Delete</a></p>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>    
+
+<div class="product-card-modal" style="display: none;">
+    <div class="product-card">
+        <div class="product-card-header">
+            <h2 class="product-name" id="dynamic-product-name">PRODUCT NAME</h2>
+            <span class="close-product-card" onclick="closeCard()">x</span>
+        </div>
+        <div class="product-card-content">
+            <div class="product-card-section active" id="section-1">
+                <div class="product-left">
+                    <div class="product-img-container">
+                        <button class="prev-product">&lt;</button>
+                        <img src="" alt="Product Image" class="product-img">
+                        <button class="next-product">&gt;</button>
+                    </div>
+                    <div class="product-info">
+                        <p>Name: <span class="product-detail" id="product-name"></span></p>
+                        <p>Price: <span class="product-detail" id="product-price"></span></p>
+                        <p>SKU: <span class="product-detail" id="product-sku"></span></p>
+                        <p>Material: <span class="product-detail" id="product-material"></span></p>
+                        <p>Remaining Stock: <span class="product-detail" id="product-stock"></span></p>
+                    </div>
+                </div>
+                <div class="product-right">
+                    <div class="product-metrics"></div>
+                    <div class="product-graph-container">
+                        <div class="chart-container">
+                            <canvas id="salesChart"></canvas>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="profitChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card-section" id="section-2">
+                <div class="product-variations"></div>
+                <div class="product-sales"></div>
+            </div>
+        </div>
+        <div class="product-card-footer">
+            <button class="previous-section" style="display: none;">Back (2/2)</button>
+            <button class="next-section">Next (1/2)</button>
+        </div>
+    </div>
+</div>
+
+    
+        <div class="add-product-modal">
+        <div class="add-product-form">
+            <h1 class="add-product-title">Add Product</h1>
+            <div class="add-product-form-left">
+                <div class="main-picture">
+                    <img src="/assets/upload-icon.png" name="collectionPicture" alt="" id="upload-icon" accept="image/*" aria-required="true">
+                    <input type="file" name="main-image" id="imageInput" accept="image/*">
+                </div>
+            </div>
+            <div class="add-product-form-right">
+                <span class="exit-form">x</span>
+                <div class="form-1">
+                    <input type="text" name="" placeholder="Name" id="product-name-input" class="product-detail-input" required>
+                    <input type="number" name="" placeholder="Price (PHP)" id="product-price-input" class="product-detail-input" required>
+                    <input type="text" name="" placeholder="SKU" id="product-sku-input" class="product-detail-input" required>
+                    <div class="product-material-container">
+                        <div id="material-list" class="material-list"></div>
+                        <input type="text" id="material-input" class="material-input" placeholder="Add a material and press Enter" required>
+                    </div>
+                </div>
+                <div class="form-2">
+                    <div class="add-row-frame">
+                    
+                        {{>variations}}
+
+                    </div>
+                    <button class="add-row-button">Add variation</button>
+
+                </div>
+                 <div class="product-form-buttons">
+                    <button class="to-product-form2-button" id="back-form-button">Back</button>
+                    <button class="to-product-form2-button" id="next-form-button">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(".product-options-popup").hide();
+
+        $('.add-product-modal').hide();
+
+        $(".edit-product-modal").hide();
+        $(".product-card-modal").hide();
+        
+        $(".form-2").hide();
+
+        $("#back-form-button").hide();
+
+    </script>
+</body>
+</html>

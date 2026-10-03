@@ -1,0 +1,35 @@
+<!-- editProfileModal.hbs -->
+<div class="edit-profile-modal" id="edit-profile-modal" style="display: none;">
+    <div class="edit-profile-form">
+        <h1 class="edit-profile-title">Edit Profile</h1>
+        <div class="edit-profile-form-left">
+            <div class="main-picture">
+                <img src="/assets/upload-icon.png" name="profilePicture" alt="Profile Picture" id="upload-profile" aria-required="true">
+                <input type="file" name="profile-picture" id="profileImageInput" accept="image/*">
+            </div>
+        </div>
+        <div class="edit-profile-form-right">
+            <span class="exit-form" id="close-edit-profile-modal">x</span>
+            <div class="form-1">
+                <input type="text" name="firstName" placeholder="First Name" id="first-name-input" class="user-detail-input" required>
+                <input type="text" name="lastName" placeholder="Last Name" id="last-name-input" class="user-detail-input" required>
+                <select name="role" id="role-input" class="user-detail-input" required>
+                    <option value="admin">Admin</option>
+                    <option value="editor">Editor</option>
+                    <option value="user">User</option>
+                </select>
+                <div class="password-container">
+                    <input type="password" name="password" placeholder="Password" id="password-input" class="user-detail-input">
+                    <span class="show-password" id="show-password">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="position: absolute; top: 110px; right: 15px;">
+                            <path d="M12 4.5C7 4.5 2.73 7.61 1 12C2.73 16.39 7 19.5 12 19.5C17 19.5 21.27 16.39 23 12C21.27 7.61 17 4.5 12 4.5ZM12 17.5C9.51 17.5 7.5 15.49 7.5 13C7.5 10.51 9.51 8.5 12 8.5C14.49 8.5 16.5 10.51 16.5 13C16.5 15.49 14.49 17.5 12 17.5ZM12 10.5C10.9 10.5 10 11.4 10 12.5C10 13.6 10.9 14.5 12 14.5C13.1 14.5 14 13.6 14 12.5C14 11.4 13.1 10.5 12 10.5Z" fill="#888"/>
+                        </svg>
+                    </span>
+                </div>
+            </div>
+            <div class="edit-profile-form-buttons">
+                <button class="save-changes-button" id="save-changes-button">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>

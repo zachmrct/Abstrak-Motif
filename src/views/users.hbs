@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="/styles/users.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/scripts/users.js"></script>
+</head>
+
+<body>
+    <div class="main">
+        {{>navbar}}
+        <div class="container">
+            <div class="admin-panel panel">
+                <div class="label">
+                    <b><h1>Admins <i>({{adminCount}})</i></h1></b>
+
+                    {{#if isAdmin}}
+                        <button class="add-button" id="add-admin-button">
+                            
+                            Add Admin
+                        </button>
+                    {{/if}}
+                </div>
+
+                <div class="users">
+                    {{#each admins}}
+                        {{>usercard}}
+                    {{/each}}
+                </div>
+            </div>
+
+            <div class="non-admin-panel panel">
+                <div class="label">
+                    <b><h1>Non-admins <i>({{nonAdminCount}})</i></h1></b>
+                    
+                    {{#if isAdmin}}
+                        <button class="add-button" id="add-non-admin-button">
+                            
+                            Add Non-Admin
+                        </button>
+                    {{/if}}
+                </div>
+
+                <div class="users">
+                    {{#each nonAdmins}}
+                        {{>usercard}}
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="add-user-modal">
+        <div class="add-user-form">
+            <div class="exit-button">
+                <img src="assets/back.png" alt="" class="exit">
+            </div>
+            <div class="add-user-form-title">
+                <h1>Create new user</h1>
+            </div>
+            <div class="add-user-form-fields">
+                <div class="user-top">
+                        <input type="text" name="" placeholder="First Name" id="firstName-input" class="add-user-text-input" required>
+                        <input type="text" name="" placeholder="Last Name" id="lastName-input" class="add-user-text-input" required>
+                        <input type="password" name="" placeholder="Password" id="password" class="add-user-text-input" required>
+                        <input type="password" name="" placeholder="Confirm Password" id="password-confirmation" class="add-user-text-input" required>
+                        <input type="text" name="" placeholder="Email" id="email-input" class="add-user-text-input" required>
+                        <input type="text" name="" placeholder="Username" id="username" class="add-user-text-input" required>
+                    </div>
+                    <div class="user-bottom">
+                        <div class="main-picture" id="add-user-pic">
+                            <img src="/assets/upload-icon.png" name="userPicture" alt="" id="upload-icon" >
+                            <input type="file" name="main-image" id="image-input" accept="image/*">
+                        </div>
+
+                        <select name="role" id="role-selection" class="user-detail-input" required>
+                            <option class="admin-roles" value="admin">Admin</option>
+                            <option class="non-admin-roles" value="user">User</option>
+                            <option class="non-admin-roles" value="editor">Editor</option>
+                        </select>
+                        <button class="submit-user-button">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {{#if (eq isAdmin true)}}
+    <div class="edit-user-modal">
+        <div class="user-form">
+            <div class="exit-button">
+                <img src="assets/back.png" alt="" class="exit-edit">
+            </div>
+            <div class="form-title">
+                <h1 id="headername"></h1>
+            </div>
+            <div class="form-fields">
+                <div class="nonadmin-details">
+                    <input type="text" placeholder="First Name" id="edit-first-name-input" class="text-input" required>
+                    <input type="text" placeholder="Last Name" id="edit-last-name-input" class="text-input" required>
+                    <select id="edit-role-input" class="text-input">
+                        <option value="" disabled selected>Select Role</option>
+                        <option value="admin">admin</option>
+                        <option value="editor">editor</option>
+                        <option value="user">user</option>
+                    </select>
+                     <button class="submit-edit-user-button">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/if}}
+    <script>
+        $(".add-user-modal, .edit-user-modal").hide();
+        $(".admin-roles").hide();
+        $(".non-admin-roles").hide();
+    </script>
+</body>
+</html>
